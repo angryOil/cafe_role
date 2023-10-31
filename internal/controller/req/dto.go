@@ -18,3 +18,17 @@ func (d CreateDto) ToDomain(cafeId int) domain.Role {
 		CreatedAt:   time.Now(),
 	}
 }
+
+type PatchDto struct {
+	Name        string
+	Description string
+}
+
+func (d PatchDto) ToDomain(cafeId, roleId int) domain.Role {
+	return domain.Role{
+		Id:          roleId,
+		CafeId:      cafeId,
+		Name:        d.Name,
+		Description: d.Description,
+	}
+}
