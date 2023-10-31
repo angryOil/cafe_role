@@ -16,6 +16,15 @@ type Role struct {
 	CreatedAt   time.Time `bun:"created_at"`
 }
 
+func ToModel(d domain.Role) Role {
+	return Role{
+		Id:          d.Id,
+		CafeId:      d.CafeId,
+		Name:        d.Name,
+		Description: d.Description,
+		CreatedAt:   d.CreatedAt,
+	}
+}
 func (d Role) ToDomain() domain.Role {
 	return domain.Role{
 		Id:          d.Id,
