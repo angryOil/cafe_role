@@ -36,7 +36,7 @@ func (r Repository) GetList(ctx context.Context, cafeId int, reqPage page.ReqPag
 	var models []model.Role
 	cnt, err := r.db.NewSelect().Model(&models).
 		ColumnExpr("name,id,substring(cr.description,1,50) as description").
-		Limit(reqPage.Size).Offset(reqPage.OffSet).Order("id desc").
+		//Limit(reqPage.Size).Offset(reqPage.OffSet).Order("id desc").
 		Where("cafe_id = ?", cafeId).
 		ScanAndCount(ctx)
 
