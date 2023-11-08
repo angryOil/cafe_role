@@ -107,6 +107,10 @@ func (h Handler) patch(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return
 		}
+		if strings.Contains(err.Error(), "duplicate") {
+			http.Error(w, err.Error(), http.StatusConflict)
+			return
+		}
 		if strings.Contains(err.Error(), "invalid") {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
