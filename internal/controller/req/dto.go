@@ -1,34 +1,11 @@
 package req
 
-import (
-	"cafe_role/internal/domain"
-	"time"
-)
-
 type CreateDto struct {
-	Name        string
-	Description string
-}
-
-func (d CreateDto) ToDomain(cafeId int) domain.Role {
-	return domain.Role{
-		CafeId:      cafeId,
-		Name:        d.Name,
-		Description: d.Description,
-		CreatedAt:   time.Now(),
-	}
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 type PatchDto struct {
-	Name        string
-	Description string
-}
-
-func (d PatchDto) ToDomain(cafeId, roleId int) domain.Role {
-	return domain.Role{
-		Id:          roleId,
-		CafeId:      cafeId,
-		Name:        d.Name,
-		Description: d.Description,
-	}
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }

@@ -1,9 +1,8 @@
-package domain
+package req
 
 import "time"
 
-type Role struct {
-	Id          int
+type Create struct {
 	CafeId      int
 	Name        string
 	Description string
