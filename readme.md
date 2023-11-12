@@ -34,6 +34,20 @@ make local-init
 make local-migrate
 ```
 
+# ginkgo 설정 [출처](https://onsi.github.io/ginkgo/#getting-started)
+
+```shell
+go get github.com/onsi/ginkgo/v2
+go install github.com/onsi/ginkgo/v2/ginkgo
+```
+
+원하는 곳(테스트할 파일 폴더위치로 이동후)
+```shell
+ginkgo bootstrap
+```
+
+
+
 # swagger 설정 [출처](https://www.soberkoder.com/swagger-go-api-swaggo/)
 
 ## dev 설정

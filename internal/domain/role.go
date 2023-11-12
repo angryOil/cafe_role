@@ -10,9 +10,8 @@ var _ Role = (*role)(nil)
 
 type Role interface {
 	ValidCreate() error
-	ValidUpdate() error
 
-	Update(name, description string) Role
+	Update(name, description string) (Role, error)
 
 	ToUpdate() vo.Update
 	ToInfo() vo.Info
@@ -43,12 +42,9 @@ func (r *role) ValidCreate() error {
 	return nil
 }
 
-func (r *role) ValidUpdate() error {
+func (r *role) validUpdate() error {
 	if r.id < 1 {
 		return errors.New(InvalidId)
-	}
-	if r.cafeId < 1 {
-		return errors.New(InvalidCafeId)
 	}
 	if r.name == "" {
 		return errors.New(InvalidName)
@@ -56,10 +52,16 @@ func (r *role) ValidUpdate() error {
 	return nil
 }
 
-func (r *role) Update(name, description string) Role {
+const notFoundError = "not found role"
+
+func (r *role) Update(name, description string) (Role, error) {
+	if r == nil {
+		return nil, errors.New(notFoundError)
+	}
 	r.name = name
 	r.description = description
-	return r
+	err := r.validUpdate()
+	return r, err
 }
 
 func (r *role) ToUpdate() vo.Update {
