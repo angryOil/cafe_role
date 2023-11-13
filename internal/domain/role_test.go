@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"cafe_role/internal/domain/vo"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -71,6 +72,31 @@ var _ = Describe("Role", func() {
 					Expect(updatedRole).ToNot(BeNil())
 					Expect(err).ToNot(BeNil())
 				})
+			})
+		})
+	})
+	Describe("ToInfo 메소드는", func() {
+		Describe("아이디와 이름이 존재하는 Role 일경우", func() {
+			var info vo.Info
+			BeforeEach(func() {
+				r = NewRoleBuilder().Id(2).Name("이름").Build()
+				info = r.ToInfo()
+			})
+			It("이름과 아이디가 존재한다", func() {
+
+				Expect(info.Id).ToNot(BeZero())
+				Expect(info.Name).ToNot(BeZero())
+			})
+		})
+		Describe("아무 필드도 존재하지 않는 Role 일 경우", func() {
+			var info vo.Info
+			BeforeEach(func() {
+				r = NewRoleBuilder().Build()
+				info = r.ToInfo()
+			})
+			It("제로값 이름과 아이디를 반환한다.", func() {
+				Expect(info.Id).To(BeZero())
+				Expect(info.Name).To(BeZero())
 			})
 		})
 	})
