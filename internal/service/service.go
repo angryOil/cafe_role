@@ -63,19 +63,10 @@ func (s Service) GetList(ctx context.Context, cafeId int, reqPage page.ReqPage) 
 }
 
 func (s Service) Patch(ctx context.Context, p req.Patch) error {
-	id, cafeId := p.Id, p.CafeId
+	id := p.Id
 	name, description := p.Name, p.Description
-	err := domain.NewRoleBuilder().
-		Id(id).
-		CafeId(cafeId).
-		Name(name).
-		Description(description).
-		Build().ValidUpdate()
-	if err != nil {
-		return err
-	}
 
-	err = s.repo.Patch(ctx, id,
+	err := s.repo.Patch(ctx, id,
 		func(domains []domain.Role) (domain.Role, error) {
 			if len(domains) != 1 {
 				return domain.NewRoleBuilder().Build(), errors.New("no rows")
@@ -83,8 +74,7 @@ func (s Service) Patch(ctx context.Context, p req.Patch) error {
 			return domains[0], nil
 		},
 		func(findD domain.Role) (vo.Update, error) {
-			u := findD.Update(name, description)
-			err := u.ValidUpdate()
+			u, err := findD.Update(name, description)
 			if err != nil {
 				return vo.Update{}, err
 			}
